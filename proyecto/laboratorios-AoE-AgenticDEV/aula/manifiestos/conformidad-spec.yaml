@@ -1,0 +1,61 @@
+# Agent Release Manifest
+# Se valida en el pipeline: sin este fichero, con hash desalineado o con la
+# evaluacion caducada, el merge se bloquea.
+
+agente: conformidad-spec
+version: 1.0.0
+propietario_humano: student de la cohorte (nombre y apellidos)
+codigo:
+  ruta: agentes/conformidad/agente.py
+  hash_sha256: b3bd6ef4ac7fceff6117987039fb92092fb435bcbd305f783e1b7a0396d9d23a
+proposito: >
+  Evalua la conformidad de un PR respecto de la spec que declara implementar y
+  emite un veredicto estructurado como comentario en el PR.
+
+nivel_autonomia: N3
+control_que_lo_fuerza:
+  - worktree aislado, sin acceso a la rama principal
+  - rama protegida con revision humana obligatoria
+  - pipeline como gate de merge
+  - sin permisos de escritura sobre manifiestos/ ni .github/
+
+herramientas:
+  - mcp: aula-contexto
+    operaciones: [listar_specs, obtener_spec, trazabilidad, resultado_tests, version_plan]
+  - github: [leer_pr, comentar_pr]
+
+datos_accesibles:
+  - specs/**
+  - tests/**
+  - diff del PR evaluado
+datos_prohibidos:
+  - manifiestos/**
+  - .github/workflows/**
+  - evals/dorado*/**
+  - secretos de entorno
+
+evaluacion:
+  conjunto: evals/dorado_ejemplo
+  casos: 15
+  precision: 1.0
+  recall: 1.0
+  f1: 1.0
+  linea_base_v0:
+    precision: 1.0
+    recall: 0.1
+    f1: 0.182
+  fecha: 2026-08-12
+  caducidad_dias: 30
+
+coste:
+  juez: offline
+  medio_por_ejecucion_usd: 0.0
+  tope_diario_usd: 3.00
+  nota: >
+    El nucleo es determinista y no consume tokens. El coste solo aparece si se
+    activa el juez de modelo para redactar la explicacion.
+
+reversion:
+  procedimiento: revertir la version desplegada y deshabilitar la integracion del agente mediante la variable CONFORMIDAD_ACTIVA. El gate de manifiesto permanece activo.
+  responsable: mentor asignado
+  tiempo_objetivo_min: 5

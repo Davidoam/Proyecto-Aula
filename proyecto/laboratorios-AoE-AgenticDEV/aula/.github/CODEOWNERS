@@ -1,0 +1,9 @@
+# Rutas protegidas. Coherente con la seccion de limites de CLAUDE.md:
+# lo que un agente no puede escribir, un humano tiene que revisarlo.
+
+*                       @lead-programa
+/labs/                  @lead-programa
+/manifiestos/           @lead-programa @mentor-asignado
+/.github/               @lead-programa
+/evals/dorado_ejemplo/  @lead-programa
+/src/aula/legado/       @mentor-asignado

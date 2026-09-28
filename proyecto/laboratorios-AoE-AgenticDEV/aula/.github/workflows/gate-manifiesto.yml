@@ -1,0 +1,25 @@
+name: gate de manifiesto de agente
+
+on:
+  pull_request:
+    paths:
+      - 'agentes/**'
+      - 'manifiestos/**'
+      - '.mcp.json'
+      - '.claude/**'
+      - 'herramientas/**'
+      - 'requirements*.txt'
+      - '.github/workflows/**'
+      - 'evals/**'
+
+jobs:
+  manifiesto:
+    name: manifiesto estructurado, alineado y vigente
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -r requirements.txt
+      - name: validar manifiestos y hashes completos
+        run: python3 herramientas/validar_manifiesto.py

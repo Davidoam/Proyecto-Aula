@@ -1,0 +1,74 @@
+{
+  "flotilla": "aula-sdlc",
+  "version": "1.0.0",
+  "contexto_compartido": {
+    "mcp": "aula-contexto",
+    "operaciones": [
+      "listar_specs",
+      "obtener_spec",
+      "trazabilidad",
+      "resultado_tests",
+      "version_plan"
+    ]
+  },
+  "agentes": [
+    {
+      "nombre": "conformidad",
+      "entrada": [
+        "pr",
+        "spec_id"
+      ],
+      "salida": "veredicto estructurado",
+      "escribe_en": [
+        "comentarios de PR"
+      ],
+      "nivel_autonomia": "N3"
+    },
+    {
+      "nombre": "triaje",
+      "entrada": [
+        "run_id del pipeline fallido"
+      ],
+      "salida": "clasificacion de fallo e hipotesis",
+      "escribe_en": [
+        "comentarios de PR"
+      ],
+      "nivel_autonomia": "N2"
+    },
+    {
+      "nombre": "modernizacion",
+      "entrada": [
+        "ruta del modulo legado",
+        "bateria de caracterizacion"
+      ],
+      "salida": "propuesta de refactor en rama propia",
+      "escribe_en": [
+        "rama agente/modernizacion"
+      ],
+      "nivel_autonomia": "N3"
+    }
+  ],
+  "handoff": [
+    {
+      "de": "triaje",
+      "a": "conformidad",
+      "cuando": "el fallo es de cobertura de spec",
+      "pasa": "spec_id afectado"
+    },
+    {
+      "de": "modernizacion",
+      "a": "conformidad",
+      "cuando": "abre PR",
+      "pasa": "pr y spec_id"
+    }
+  ],
+  "conflicto": {
+    "regla": "cada ruta tiene un unico agente con permiso de escritura; los demas proponen",
+    "propietarios": {
+      "src/aula/legado/": "modernizacion",
+      "comentarios de PR": "conformidad",
+      "src/aula/reglas/": "ninguno, solo humano"
+    },
+    "escalado": "si dos agentes necesitan la misma ruta, para la ejecucion y decide el humano"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "pr-003-fuera-de-alcance",
+  "titulo": "Toca el pipeline y omite un test",
+  "criterios_declarados": [
+    "CA-01"
+  ],
+  "ficheros": [
+    {
+      "ruta": "src/aula/reglas/media.py",
+      "contenido": "pass\n"
+    },
+    {
+      "ruta": ".github/workflows/ci.yml",
+      "contenido": "on: push\n"
+    },
+    {
+      "ruta": "tests/test_media_expediente.py",
+      "contenido": "@pytest.mark.skip(reason=\"flaky\")\ndef test_media():\n    \"\"\"cubre: SPEC-002/CA-01\"\"\"\n    assert nota_media_ponderada(e,p) == 1\n"
+    }
+  ]
+}

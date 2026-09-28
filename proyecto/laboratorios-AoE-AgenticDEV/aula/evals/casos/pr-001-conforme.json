@@ -1,0 +1,17 @@
+{
+  "id": "pr-001-conforme",
+  "titulo": "Anade CA-07 media cero sin computables",
+  "criterios_declarados": [
+    "CA-07"
+  ],
+  "ficheros": [
+    {
+      "ruta": "src/aula/reglas/media.py",
+      "contenido": "if denominador == 0:\n    return _redondear(Decimal('0'))\n"
+    },
+    {
+      "ruta": "tests/test_media_expediente.py",
+      "contenido": "def test_expediente_vacio_no_rompe():\n    \"\"\"cubre: SPEC-002/CA-07\"\"\"\n    assert nota_media_ponderada(expediente(), plan()) == Decimal(\"0.00\")\n"
+    }
+  ]
+}

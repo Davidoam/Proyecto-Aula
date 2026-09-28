@@ -1,0 +1,27 @@
+{
+  "student": "referencia del laboratorio",
+  "estaciones": {
+    "S2": {
+      "estado": "sellada",
+      "pistas": 0,
+      "intentos": 1,
+      "predicciones": {
+        "aciertos": 1,
+        "total": 1
+      },
+      "desbloqueada": false,
+      "sellada": "2026-08-12T04:46:12+00:00"
+    },
+    "S5": {
+      "estado": "pendiente",
+      "pistas": 1,
+      "intentos": 0,
+      "predicciones": {
+        "aciertos": 0,
+        "total": 0
+      },
+      "desbloqueada": false,
+      "sellada": null
+    }
+  }
+}
